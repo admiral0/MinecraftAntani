@@ -1,2 +1,5 @@
-.gradle
+.gradle/
 root/
+*.iml
+.idea/
+build/
