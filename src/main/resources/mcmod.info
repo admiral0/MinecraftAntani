@@ -1,0 +1,16 @@
+[
+{
+  "modid": "minecraftantani",
+  "name": "Minecraft Antani",
+  "description": "Manage your server with a WebUI",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["admiral0"],
+  "credits": "beta4 and kevingrave6 for giving the idea",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
