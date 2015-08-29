@@ -1,0 +1,8 @@
+rootProject.name = 'MinecraftAntani'
+
+def sklauncher = ['launcher','launcher-fancy','launcher-builder','launcher-bootstrap', 'creator-tools']
+
+for(def proj : sklauncher){
+    include ":" + proj
+    project(":${proj}").projectDir = new File("./sklauncher/${proj}")
+}
