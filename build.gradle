@@ -87,3 +87,7 @@ subprojects {
         }
     }
 }
+
+wrapper {
+    gradleVersion '2.6'
+}
