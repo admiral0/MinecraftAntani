@@ -29,24 +29,20 @@ minecraft {
 }
 
 
-def undertow = '1.2.0.Beta4'
-def vaadin = '7.5.4'
+def deps = [
+    jetty: '9.3.3.v20150827'
+]
 
 dependencies {
-    compile 'org.eclipse.jetty:jetty-server:9.3.2.v20150730'
-    compile 'org.eclipse.jetty:jetty-servlet:9.3.2.v20150730'
-    compile 'org.eclipse.jetty:jetty-continuation:9.3.2.v20150730'
-
-
-    compile 'com.vaadin:vaadin-server:' + vaadin
-    compile 'com.vaadin:vaadin-client-compiled:' + vaadin
-    compile 'com.vaadin:vaadin-push:' + vaadin
-    compile 'com.vaadin:vaadin-themes:' + vaadin
-
+    compile 'org.eclipse.jetty:jetty-server:' + deps.jetty
+    compile 'org.eclipse.jetty:jetty-servlet:' + deps.jetty
+    compile 'org.eclipse.jetty:jetty-continuation:' + deps.jetty
 }
 
 processResources
 {
+    dependsOn ':launcher:shadowJar'
+    
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
@@ -62,6 +58,10 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+    from {
+        rename '.*jar', 'launcher.jar'
+        project(':launcher').tasks.getByName('shadowJar').outputs.files.singleFile 
     }
 }
 
