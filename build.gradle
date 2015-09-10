@@ -30,13 +30,18 @@ minecraft {
 
 
 def deps = [
-    jetty: '9.3.3.v20150827'
+    jetty: '9.3.3.v20150827',
+    jersey: '2.21',
+    mustache: '0.9.1'
 ]
 
 dependencies {
     compile 'org.eclipse.jetty:jetty-server:' + deps.jetty
     compile 'org.eclipse.jetty:jetty-servlet:' + deps.jetty
     compile 'org.eclipse.jetty:jetty-continuation:' + deps.jetty
+    
+    compile 'org.glassfish.jersey.core:jersey-server:' + deps.jersey
+    compile 'com.github.spullara.mustache.java:compiler:' + deps.mustache
 }
 
 processResources
