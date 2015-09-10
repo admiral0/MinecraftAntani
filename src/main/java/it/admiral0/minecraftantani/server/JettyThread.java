@@ -1,6 +1,12 @@
 package it.admiral0.minecraftantani.server;
 
+import javax.ws.rs.Path;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.reflections.Reflections;
 
 /**
  * Manages the lifecycle for undertow server
@@ -19,13 +25,19 @@ public class JettyThread extends Thread {
     
     @Override
     public void run() {
-        Server server = new Server(port);
-        /*ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        server.setHandler(handler);
-        ServletHolder holder = new ServletHolder("Vaadin",VaadinServlet.class);
-        holder.setInitParameter("UI","it.admiral0.minecraftantani.server.ServerUi");
-        handler.addServlet(holder, "/*");*/
         try {
+        Server server = new Server(port);
+            ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+            handler.setContextPath("/");
+            
+            Reflections refl = new Reflections("it.admiral0.minecraftantani.jersey");
+            ResourceConfig conf = new ResourceConfig(refl.getTypesAnnotatedWith(Path.class));
+            conf.register(org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature.class);
+            
+            ServletHolder holder = new ServletHolder(new ServletContainer(conf));
+            handler.addServlet(holder, webRoot + "*");
+            server.setHandler(handler);
+        
             server.start();
             server.join();
 

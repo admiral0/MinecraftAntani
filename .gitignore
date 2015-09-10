@@ -4,3 +4,4 @@ root/
 .idea/
 build/
 .nb-gradle/
+.nb-gradle-properties
