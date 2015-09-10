@@ -3,3 +3,4 @@ root/
 *.iml
 .idea/
 build/
+.nb-gradle/
