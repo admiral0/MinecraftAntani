@@ -9,7 +9,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.reflections.Reflections;
 
 /**
- * Manages the lifecycle for undertow server
+ * Manages the life cycle for jetty server
  */
 public class JettyThread extends Thread {
 
@@ -22,22 +22,23 @@ public class JettyThread extends Thread {
         this.webRoot = webRoot;
         this.port = port;
     }
-    
+
     @Override
     public void run() {
         try {
-        Server server = new Server(port);
+            //TODO bind to ip address which host solves to
+            Server server = new Server(port);
             ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
             handler.setContextPath("/");
-            
+
             Reflections refl = new Reflections("it.admiral0.minecraftantani.jersey");
             ResourceConfig conf = new ResourceConfig(refl.getTypesAnnotatedWith(Path.class));
             conf.register(org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature.class);
-            
+
             ServletHolder holder = new ServletHolder(new ServletContainer(conf));
             handler.addServlet(holder, webRoot + "*");
             server.setHandler(handler);
-        
+
             server.start();
             server.join();
 

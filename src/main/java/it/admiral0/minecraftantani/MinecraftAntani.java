@@ -56,6 +56,7 @@ public class MinecraftAntani
         
         config.save();
         settings = new MinecraftAntaniSettings(host, port, webRoot);
+        MinecraftAntaniSettings.setInstance(settings);
     }
     
     @EventHandler
@@ -83,4 +84,10 @@ public class MinecraftAntani
         JettyThread thread = new JettyThread(host,webRoot,port);
         thread.start();
     }
+
+    protected MinecraftAntaniSettings getSettings() {
+        return settings;
+    }
+    
+    
 }

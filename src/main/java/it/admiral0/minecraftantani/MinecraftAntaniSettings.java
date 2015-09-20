@@ -15,7 +15,10 @@ public class MinecraftAntaniSettings {
         this.host = host;
         this.port = port;
         this.webroot = webroot;
-        _instance = this;
+    }
+    
+    public static void setInstance(MinecraftAntaniSettings s){
+        _instance = s;
     }
     
     public static MinecraftAntaniSettings getInstance(){
