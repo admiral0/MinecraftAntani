@@ -25,6 +25,8 @@ public class MinecraftAntani
     private String webRoot;
     private String host;
     
+    private MinecraftAntaniSettings settings;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -53,6 +55,7 @@ public class MinecraftAntani
         host = hostProperty.getString();
         
         config.save();
+        settings = new MinecraftAntaniSettings(host, port, webRoot);
     }
     
     @EventHandler
