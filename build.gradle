@@ -18,6 +18,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: "jacoco"
 
 version = "0.1"
 group= "it.admiral0.minecraftantani" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -102,9 +103,57 @@ wrapper {
     gradleVersion '2.7'
 }
 
+jacoco {
+    toolVersion '0.7.5.201505241946'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, include: 'it/admiral0/minecraftantani/jersey/**')
+        })
+    }
+}
+
 test {
     useTestNG {
         useDefaultListeners = true
     }
     testLogging.showStandardStreams = true
 }
+
+
+
+jar {
+    manifest {
+        attributes(
+            "Implementation-Version" : version
+        )
+    }
+}
+
+/* 
+ * Forge Gradle does funky stuff with sources so 2 copy tasks are necessary
+ *  1. Generate/Expand sources to generatedSources so IDE is happy.
+ *  2. Move sources around so compiler(compileJava) is happy.
+ */
+task generateSources(type: Copy){
+    from(sourceSets.main.allSource) {
+        include '**/*.in'
+    }
+    into "$buildDir/generatedSources";
+    expand([
+        'version': version
+    ])
+    rename '(.*)\\.in$', '$1'
+}
+task prepareGeneratedCompile(type: Copy){
+    from "$buildDir/generatedSources"
+    into "$buildDir/source/java"
+}
+sourceSets.main.java.srcDir "$buildDir/generatedSources"
+sourceMainJava.dependsOn generateSources
+sourceMainJava.finalizedBy prepareGeneratedCompile

@@ -1,0 +1,9 @@
+package it.admiral0.minecraftantani;
+
+/**
+ * A class to contain all gradle constants
+ * @author admiral0
+ */
+public final class PackageConstants {
+    public static final String VERSION = "$version";
+}

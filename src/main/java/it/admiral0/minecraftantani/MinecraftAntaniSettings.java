@@ -39,7 +39,7 @@ public class MinecraftAntaniSettings {
     }
     
     public String getExternalRoot() {
-        return "http://" + host + Integer.toString(port) + "/" + webroot + "/";
+        return "http://" + host + ":" + Integer.toString(port) + "/" + webroot + "/";
     }
     
 }
