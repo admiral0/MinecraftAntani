@@ -43,6 +43,8 @@ dependencies {
     
     compile 'org.glassfish.jersey.containers:jersey-container-servlet-core:' + deps.jersey
     compile 'org.glassfish.jersey.ext:jersey-mvc-mustache:' + deps.jersey
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:' + deps.jersey
+
     
     compile 'org.reflections:reflections:' + deps.reflections
     
@@ -83,8 +85,8 @@ subprojects {
     group = 'com.skcraft'
     version = '4.3-SNAPSHOT'
 
-    sourceCompatibility = 1.6
-    targetCompatibility = 1.6
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     repositories {
         mavenCentral()
